@@ -16,7 +16,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RP75K2MFQW"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-RP75K2MFQW');
@@ -35,7 +35,7 @@
   <!-- Flipbook main Js file -->
   <script src="lib/js/dflip.min.js" type="text/javascript"></script>
   <!-- Flipbook main Js file -->
-  <script>
+  <!-- <script>
     jQuery(document).ready(function () {
       //uses source from online(make sure the file has CORS access enabled if used in cross-domain)
       let urlParams = new URLSearchParams(window.location.search);
@@ -53,7 +53,43 @@
       }
 
     });
+  </script> -->
+  <script>
+    jQuery(document).ready(function () {
+      let urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id'); // Assuming 'id' is the parameter name for the ID
+      const env = urlParams.get('env')
+      let baseUrl = 'https://backend-ordercenter.awwwex.ai'
+      if (env == 'qa') baseUrl = 'https://qa-backend-ordercenter.awwwex.ai'
+      if (!id) {
+        var flipBook = $("#flipbookContainer").html("<div>No ID specified</div>");
+      } else {
+        // Make an AJAX request to fetch the PDF URL based on the ID
+        $.ajax({
+          url: baseUrl + '/api/catalogue/get-catalogue-url-by-id?id=' + id, // Replace 'your_backend_url' with your actual backend URL
+          method: 'GET',
+          success: function (response) {
+            const pdfFile = response.data; // Assuming the response contains the PDF URL
+            console.log(response)
+            if (!pdfFile) {
+              var flipBook = $("#flipbookContainer").html("<div>No PDF URL found for this ID</div>");
+            } else {
+              var options = {
+                height: 2000,
+                duration: 700,
+                backgroundColor: "#2F2D2F"
+              };
+              var flipBook = $("#flipbookContainer").flipBook(pdfFile, options);
+            }
+          },
+          error: function () {
+            var flipBook = $("#flipbookContainer").html("<div>Error fetching PDF URL</div>");
+          }
+        });
+      }
+    });
   </script>
+
 
 </body>
 
