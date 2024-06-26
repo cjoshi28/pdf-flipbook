@@ -59,8 +59,8 @@
       let urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id'); // Assuming 'id' is the parameter name for the ID
       const env = urlParams.get('env')
-      let baseUrl = 'https://backend-ordercenter.awwwex.ai'
-      if (env == 'qa') baseUrl = 'https://qa-backend-ordercenter.awwwex.ai'
+      let baseUrl = 'https://core-backend.awwwex.ai'
+      if (env == 'qa') baseUrl = 'https://qa-core-backend.awwwex.ai'
       if (!id) {
         var flipBook = $("#flipbookContainer").html("<div>No ID specified</div>");
       } else {
